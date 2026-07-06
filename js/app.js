@@ -196,6 +196,9 @@ document.addEventListener('click', (e) => {
   if (catBtn) { processEvent(catBtn.dataset.color); }
 });
 
+$('btn-stats')?.addEventListener('click', () => game.viewStats());
+$('btn-settings')?.addEventListener('click', () => game.goToSettings());
+
 const savedDuration = localStorage.getItem('inova_timer_duration');
 if (savedDuration) game.setTimerDuration(parseInt(savedDuration));
 
