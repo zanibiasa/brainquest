@@ -146,6 +146,7 @@ const handlers = {
     s.updatePrompt(state.waitingMessage);
     s.updatePlayerName('');
     s.updateStatus('');
+    if (state.screenMode === 'touch') s.setTouchGrid('tag');
   },
   unknown_tag: (state) => {
     SCREENS.waiting.updateStatus(state.waitingMessage);
@@ -155,6 +156,7 @@ const handlers = {
     s.updatePrompt('Please scan the category tag! 🧭');
     s.updatePlayerName(state.players[state.currentPlayerIdx]?.name || '');
     s.updateStatus('');
+    if (state.screenMode === 'touch') s.setTouchGrid('category');
   },
   first_turn: (state) => {
     SCREENS.waiting.updateStatus(state.waitingMessage);
@@ -181,6 +183,7 @@ const handlers = {
     s.updatePrompt(state.waitingMessage);
     s.updatePlayerName('');
     s.updateStatus('');
+    if (state.screenMode === 'touch') s.setTouchGrid('tag');
   },
 };
 

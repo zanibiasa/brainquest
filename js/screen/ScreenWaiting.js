@@ -5,8 +5,6 @@ const ScreenWaiting = {
 
   render(state) {
     const showTouch = state.screenMode === 'touch';
-    const showPlayers = showTouch && state.waitingMode === 'tag';
-    const showCats = showTouch && state.waitingMode === 'category';
 
     const sorted = [...state.players].sort((a, b) => b.score - a.score);
     const leaderboard = sorted.map((p, i) => {
@@ -25,18 +23,18 @@ const ScreenWaiting = {
           <div class="waiting-main">
             <div class="waiting-prompt-text" id="waiting-prompt">${state.waitingMessage}</div>
             <div class="waiting-player-name" id="waiting-player-name"></div>
-            <div id="waiting-status" class="waiting-status"></div>
-            ${showPlayers ? `<div id="waiting-touch-players" class="touch-grid">
-              <button class="touch-btn touch-player" data-tag="TAG1">1</button>
-              <button class="touch-btn touch-player" data-tag="TAG2">2</button>
-              <button class="touch-btn touch-player" data-tag="TAG3">3</button>
-              <button class="touch-btn touch-player" data-tag="TAG4">4</button>
-            </div>` : ''}
-            ${showCats ? `<div id="waiting-touch-categories" class="touch-grid">
-              <button class="touch-btn touch-cat" data-color="blue">🔵 Blue</button>
-              <button class="touch-btn touch-cat" data-color="red">🔴 Red</button>
-              <button class="touch-btn touch-cat" data-color="green">🟢 Green</button>
-              <button class="touch-btn touch-cat" data-color="yellow">🟡 Yellow</button>
+            ${!showTouch ? '<div id="waiting-status" class="waiting-status"></div>' : ''}
+            ${showTouch ? `<div id="waiting-touch-players" class="touch-grid" style="gap:8px;">
+              <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG1">1</button>
+              <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG2">2</button>
+              <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG3">3</button>
+              <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG4">4</button>
+            </div>
+            <div id="waiting-touch-categories" class="touch-grid hidden" style="gap:8px;">
+              <button class="touch-btn touch-cat" style="padding:12px 8px;min-height:48px;font-size:1.1rem;" data-color="blue">🔵 Blue</button>
+              <button class="touch-btn touch-cat" style="padding:12px 8px;min-height:48px;font-size:1.1rem;" data-color="red">🔴 Red</button>
+              <button class="touch-btn touch-cat" style="padding:12px 8px;min-height:48px;font-size:1.1rem;" data-color="green">🟢 Green</button>
+              <button class="touch-btn touch-cat" style="padding:12px 8px;min-height:48px;font-size:1.1rem;" data-color="yellow">🟡 Yellow</button>
             </div>` : ''}
           </div>
           <div class="leaderboard-sidebar">
@@ -83,5 +81,13 @@ const ScreenWaiting = {
   updateStatus(text) {
     const el = document.getElementById('waiting-status');
     if (el) el.textContent = text;
+  },
+
+  setTouchGrid(mode) {
+    const playersGrid = document.getElementById('waiting-touch-players');
+    const catsGrid = document.getElementById('waiting-touch-categories');
+    if (!playersGrid || !catsGrid) return;
+    playersGrid.classList.toggle('hidden', mode !== 'tag');
+    catsGrid.classList.toggle('hidden', mode !== 'category');
   },
 };
