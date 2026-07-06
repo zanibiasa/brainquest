@@ -10,7 +10,7 @@ const ScreenConnect = {
     const statusClass = isConnected ? 'connected' : 'connecting';
     const statusText = isConnected ? 'Touch Mode 🖐️' : 'Connecting to host...';
     return `
-      <div id="connect-screen" class="screen active">
+      <div id="connect-screen" class="screen">
         <h1>🧠 Brain Quest! ✨</h1>
         <div id="conn-status"><span class="status-dot ${statusClass}"></span>${statusText}</div>
         <button id="btn-keyboard-mode" class="btn-secondary" style="max-width:320px;margin-top:12px;">🖐️ Touch Mode</button>

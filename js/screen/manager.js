@@ -20,6 +20,8 @@ function showScreen(name, state) {
 
   currentScreen = screen;
   appEl.innerHTML = screen.render(state);
+  const screenEl = appEl.querySelector('.screen');
+  if (screenEl) screenEl.classList.add('active');
   screen.events(state);
   return true;
 }

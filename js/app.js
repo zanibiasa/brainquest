@@ -31,8 +31,6 @@ async function precacheImages() {
   } catch {}
 }
 
-precacheImages();
-
 function startPoller() {
   if (pollerStarted) return;
   pollerStarted = true;
@@ -202,3 +200,4 @@ const savedDuration = localStorage.getItem('inova_timer_duration');
 if (savedDuration) game.setTimerDuration(parseInt(savedDuration));
 
 showScreen('connect', game.state);
+precacheImages();
