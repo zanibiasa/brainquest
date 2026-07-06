@@ -26,6 +26,7 @@ const ScreenConnect = {
   events(state) {
     document.getElementById('btn-keyboard-mode')?.addEventListener('click', () => {
       poller.stop();
+      game.state.screenMode = 'touch';
       const el = document.getElementById('conn-status');
       if (el) el.innerHTML = '<span class="status-dot connected"></span>Touch Mode 🖐️';
       setTimeout(() => game.goToDashboard(), 400);
