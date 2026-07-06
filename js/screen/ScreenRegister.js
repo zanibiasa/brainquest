@@ -17,16 +17,16 @@ const ScreenRegister = {
     ).join('');
 
     return `
-      <div id="register-screen" class="screen">
+      <div id="register-screen" class="screen" ${showTouch ? 'style="gap:8px;padding:12px"' : ''}>
         <h2>👥 Register Players! 👥</h2>
         <div id="reg-preset-label" class="reg-preset-label">${presetLabel}</div>
         <div id="reg-prompt" class="reg-prompt">${prompt}</div>
-        <div id="reg-status" class="reg-status">${statusText}</div>
-        ${showTouch ? `<div id="reg-touch-players" class="touch-grid">
-          <button class="touch-btn touch-player" data-tag="TAG1">1</button>
-          <button class="touch-btn touch-player" data-tag="TAG2">2</button>
-          <button class="touch-btn touch-player" data-tag="TAG3">3</button>
-          <button class="touch-btn touch-player" data-tag="TAG4">4</button>
+        ${!showTouch ? `<div id="reg-status" class="reg-status">${statusText}</div>` : ''}
+        ${showTouch ? `<div id="reg-touch-players" class="touch-grid" style="gap:8px;">
+          <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG1">1</button>
+          <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG2">2</button>
+          <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG3">3</button>
+          <button class="touch-btn touch-player" style="padding:12px 8px;min-height:48px;font-size:1.2rem;" data-tag="TAG4">4</button>
         </div>` : ''}
         <div id="reg-name-area" class="reg-name-area ${hasName ? '' : 'hidden'}">
           <input type="text" id="reg-name-input" class="reg-name-input" placeholder="What's your name? 🤔" maxlength="20">
