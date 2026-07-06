@@ -71,6 +71,7 @@ class GameEngine {
 
   _handleTag(uid) {
     if (this.state.screen === 'register') {
+      if (this.state.players.some(p => p.tag === uid)) return;
       this._pendingNameTag = uid;
       this.state.registerTag = uid;
       this._notify({ type: 'tag_scanned_registration', tag: uid });
