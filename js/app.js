@@ -120,6 +120,13 @@ if (savedIP) {
   });
 }
 
+function updateTouchLabels() {
+  document.querySelectorAll('.touch-player[data-tag]').forEach(btn => {
+    const p = game.state.players.find(pl => pl.tag === btn.dataset.tag);
+    btn.textContent = p ? p.name : btn.dataset.tag.replace('TAG', '');
+  });
+}
+
 const handlers = {
   tag_scanned_registration: (state, change) => {
     const s = SCREENS.register;
@@ -132,6 +139,7 @@ const handlers = {
     s.hideNameArea();
     s.updatePlayerList(state.players);
     if (state.players.length >= 1) s.showActions();
+    if (state.screenMode === 'touch') updateTouchLabels();
   },
   next_registration: (state) => {
     const s = SCREENS.register;
@@ -146,7 +154,7 @@ const handlers = {
     s.updatePrompt(state.waitingMessage);
     s.updatePlayerName('');
     s.updateStatus('');
-    if (state.screenMode === 'touch') s.setTouchGrid('tag');
+    if (state.screenMode === 'touch') { s.setTouchGrid('tag'); updateTouchLabels(); }
   },
   unknown_tag: (state) => {
     SCREENS.waiting.updateStatus(state.waitingMessage);
@@ -183,7 +191,7 @@ const handlers = {
     s.updatePrompt(state.waitingMessage);
     s.updatePlayerName('');
     s.updateStatus('');
-    if (state.screenMode === 'touch') s.setTouchGrid('tag');
+    if (state.screenMode === 'touch') { s.setTouchGrid('tag'); updateTouchLabels(); }
   },
 };
 
