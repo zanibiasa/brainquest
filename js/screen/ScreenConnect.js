@@ -3,6 +3,10 @@ const ScreenConnect = {
 
   init() {
     this._touchMode = false;
+    document.addEventListener('fullscreenchange', () => {
+      const btn = document.getElementById('btn-fullscreen');
+      if (btn) btn.textContent = document.fullscreenElement ? '⛶ Exit' : '⛶ Fullscreen';
+    });
   },
 
   render(state) {
@@ -14,6 +18,7 @@ const ScreenConnect = {
         <h1>🧠 Brain Quest! ✨</h1>
         <div id="conn-status"><span class="status-dot ${statusClass}"></span>${statusText}</div>
         <button id="btn-keyboard-mode" class="btn-secondary" style="max-width:320px;margin-top:12px;">🖐️ Touch Mode</button>
+        <button id="btn-fullscreen" class="btn-secondary" style="max-width:320px;margin-top:8px;">⛶ Fullscreen</button>
         <button id="btn-rescan" class="btn-secondary" style="max-width:320px;margin-top:8px;background:#8b5cf6;border-color:#a78bfa;">🔄 Re-scan ESP</button>
         <div class="conn-divider">— or —</div>
         <div class="conn-manual-row">
@@ -30,6 +35,15 @@ const ScreenConnect = {
       const el = document.getElementById('conn-status');
       if (el) el.innerHTML = '<span class="status-dot connected"></span>Touch Mode 🖐️';
       setTimeout(() => game.goToDashboard(), 400);
+    });
+
+    document.getElementById('btn-fullscreen')?.addEventListener('click', async () => {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+        try { await screen.orientation.lock('landscape'); } catch {}
+      } else {
+        await document.exitFullscreen();
+      }
     });
 
     document.getElementById('btn-rescan')?.addEventListener('click', async () => {
