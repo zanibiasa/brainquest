@@ -18,6 +18,14 @@ const ScreenEditor = {
     this._letters = ['A', 'B', 'C', 'D'];
   },
 
+  _switchTo(sub) {
+    this._state.screen = sub;
+    const fn = sub.charAt(0).toUpperCase() + sub.slice(1);
+    appEl.innerHTML = this[`_render${fn}`]();
+    appEl.querySelector('.screen')?.classList.add('active');
+    this[`_events${fn}`]();
+  },
+
   render(state) {
     const es = this._state;
     if (es.screen === 'list') return this._renderList();
@@ -84,8 +92,7 @@ const ScreenEditor = {
       this._state.screen = 'preset';
       this._state.editingKey = null;
       this._state.creating = false;
-      appEl.innerHTML = this._renderPreset();
-      this._eventsPreset();
+      this._switchTo('preset');
     });
 
     document.querySelectorAll('[data-action="edit"]').forEach(b => {
@@ -93,8 +100,7 @@ const ScreenEditor = {
         this._state.screen = 'preset';
         this._state.editingKey = b.dataset.key;
         this._state.creating = false;
-        appEl.innerHTML = this._renderPreset();
-        this._eventsPreset();
+        this._switchTo('preset');
       });
     });
 
@@ -104,8 +110,7 @@ const ScreenEditor = {
         const custom = loadCustomPresets();
         if (confirm(`Delete "${custom[key]?.name}"?`)) {
           deleteCustomPreset(key);
-          appEl.innerHTML = this._renderList();
-          this._eventsList();
+          this._switchTo('list');
         }
       });
     });
@@ -158,18 +163,14 @@ const ScreenEditor = {
 
   _eventsPreset() {
     document.getElementById('btn-editor-preset-back')?.addEventListener('click', () => {
-      this._state.screen = 'list';
-      appEl.innerHTML = this._renderList();
-      this._eventsList();
+      this._switchTo('list');
     });
 
     document.getElementById('btn-editor-preset-save')?.addEventListener('click', () => {
       const form = this._getEditorFormData();
       if (!form) return;
       saveCustomPreset(form.key, form.data);
-      this._state.screen = 'list';
-      appEl.innerHTML = this._renderList();
-      this._eventsList();
+      this._switchTo('list');
     });
 
     document.querySelectorAll('.btn-sm-questions').forEach(btn => {
@@ -188,10 +189,8 @@ const ScreenEditor = {
         if (!data.questionBanks) data.questionBanks = {};
         if (!data.questionBanks[cat]) data.questionBanks[cat] = [];
         saveCustomPreset(this._state.editingKey, data);
-        this._state.screen = 'questions';
         this._state.editingCat = cat;
-        appEl.innerHTML = this._renderQuestions();
-        this._eventsQuestions();
+        this._switchTo('questions');
       });
     });
   },
@@ -247,16 +246,17 @@ const ScreenEditor = {
   },
 
   _eventsQuestions() {
+    if (this._editorQuestionClick) {
+      document.removeEventListener('click', this._editorQuestionClick);
+    }
+
     document.getElementById('btn-editor-questions-back')?.addEventListener('click', () => {
-      this._state.screen = 'preset';
-      appEl.innerHTML = this._renderPreset();
-      this._eventsPreset();
+      this._switchTo('preset');
     });
 
     document.getElementById('btn-editor-question-add')?.addEventListener('click', () => {
       this._state.creating = true;
-      appEl.innerHTML = this._renderQuestions();
-      this._eventsQuestions();
+      this._switchTo('questions');
     });
 
     document.addEventListener('click', this._editorQuestionClick = (e) => {
@@ -299,16 +299,14 @@ const ScreenEditor = {
         }
         this._state.creating = false;
         saveCustomPreset(this._state.editingKey, data);
-        appEl.innerHTML = this._renderQuestions();
-        this._eventsQuestions();
+        this._switchTo('questions');
         return;
       }
 
       const cancelBtn = e.target.closest('[data-action="cancel-q"]');
       if (cancelBtn) {
         this._state.creating = false;
-        appEl.innerHTML = this._renderQuestions();
-        this._eventsQuestions();
+        this._switchTo('questions');
         return;
       }
 
@@ -324,8 +322,7 @@ const ScreenEditor = {
         bank.splice(idx, 1);
         this._state.creating = false;
         saveCustomPreset(this._state.editingKey, data);
-        appEl.innerHTML = this._renderQuestions();
-        this._eventsQuestions();
+        this._switchTo('questions');
         return;
       }
     });
@@ -362,9 +359,11 @@ const ScreenEditor = {
 };
 
 window.showEditorList = function() {
-  ScreenEditor._state.screen = 'list';
-  ScreenEditor._state.editingKey = null;
-  ScreenEditor._state.editingCat = null;
-  ScreenEditor._state.creating = false;
+  ScreenEditor._state = {
+    screen: 'list',
+    editingKey: null,
+    editingCat: null,
+    creating: false,
+  };
   showScreen('editor', game.state);
 };
