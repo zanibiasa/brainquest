@@ -165,12 +165,13 @@ class GameEngine {
 
     const player = this.state.players[this.state.currentPlayerIdx];
     if (correct) {
-      player.score += this._scorer.calculateScore(this.state.timeRemaining);
       player.correctCount++;
     }
+    const steps = this._scorer.calculateSteps(correct, this.state.timeRemaining, this.state.timerDuration);
+    player.score += steps;
 
     this._recordAnswer(correct, this.state.timeRemaining);
-    this._notify({ type: 'answer', correct, index, playerName: player?.name });
+    this._notify({ type: 'answer', correct, index, playerName: player?.name, steps });
     setTimeout(() => this._afterAnswer(), 1500);
   }
 
@@ -204,7 +205,9 @@ class GameEngine {
       this.state.answered = true;
       this.state.feedback = 'timeout';
       this._recordAnswer(false, 0);
-      this._notify({ type: 'timeout' });
+      const player = this.state.players[this.state.currentPlayerIdx];
+      if (player) player.score += 1;
+      this._notify({ type: 'timeout', steps: 1 });
       setTimeout(() => this._afterAnswer(), 1500);
     }
   }

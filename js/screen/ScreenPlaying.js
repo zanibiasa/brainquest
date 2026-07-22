@@ -9,6 +9,7 @@ const ScreenPlaying = {
     const q = state.question;
     if (!q) return '<div id="playing-screen" class="screen"></div>';
 
+    this._timerDuration = state.timerDuration;
     const player = state.players[state.currentPlayerIdx];
     const tiles = this._letters.map((l, i) => `
       <button class="answer-tile ${l}" id="ans-${l}">
@@ -28,6 +29,9 @@ const ScreenPlaying = {
             <div class="question-text" id="question-text">${q.text}</div>
           </div>
           <div class="answers-grid">${tiles}</div>
+        </div>
+        <div id="step-feedback" class="step-feedback hidden">
+          <span id="step-text"></span>
         </div>
         <div class="bottom-bar">
           <span id="player-label">${player?.name || 'Player'}</span>
@@ -50,10 +54,14 @@ const ScreenPlaying = {
 
   updateTimer(remaining) {
     const el = document.getElementById('timer-display');
-    if (el) {
-      el.textContent = remaining;
-      el.classList.toggle('warning', remaining <= 5);
-    }
+    if (!el) return;
+    el.textContent = remaining;
+
+    const pct = remaining / this._timerDuration;
+    el.classList.remove('zone-fast', 'zone-mid', 'zone-slow');
+    if (pct > 0.7)       el.classList.add('zone-fast');
+    else if (pct > 0.3)  el.classList.add('zone-mid');
+    else                  el.classList.add('zone-slow');
   },
 
   updateScore(value) {
@@ -87,5 +95,14 @@ const ScreenPlaying = {
         tile.classList.add('reveal');
       }
     });
+  },
+
+  showStepFeedback(steps) {
+    const el = document.getElementById('step-feedback');
+    const text = document.getElementById('step-text');
+    if (!el || !text) return;
+    text.textContent = '⭐ Move ' + steps + ' step' + (steps > 1 ? 's' : '') + '!';
+    el.classList.remove('hidden');
+    el.classList.add('show');
   },
 };

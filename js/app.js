@@ -177,11 +177,13 @@ const handlers = {
   },
   answer: (state, change) => {
     SCREENS.playing.showFeedback(change.correct, change.index, state.question);
+    SCREENS.playing.showStepFeedback(change.steps);
+    const player = state.players[state.currentPlayerIdx];
+    if (player) SCREENS.playing.updateScore(player.score);
   },
-  timeout: (state) => {
+  timeout: (state, change) => {
     SCREENS.playing.showTimeout(state.question);
-  },
-  score_update: (state) => {
+    SCREENS.playing.showStepFeedback(change.steps);
     const player = state.players[state.currentPlayerIdx];
     if (player) SCREENS.playing.updateScore(player.score);
   },
