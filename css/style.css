@@ -259,7 +259,7 @@ body::after {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 700px;
+  max-width: 880px;
   width: 100%;
   align-content: flex-start;
 }
@@ -277,7 +277,7 @@ body::after {
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   min-width: 140px;
   flex: 1;
-  max-width: 200px;
+  max-width: 210px;
   box-shadow: 0 4px 0 #ca8a04, 0 6px 12px rgba(0,0,0,0.1);
   position: relative;
   color: #1e1b4b;
@@ -339,7 +339,6 @@ body::after {
 }
 
 .preset-cat-line {
-  white-space: nowrap;
   display: flex;
   align-items: center;
   gap: 8px;
