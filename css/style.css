@@ -776,6 +776,18 @@ body::after {
   animation: step-pop 0.4s ease-out;
 }
 
+.step-feedback.wrong {
+  color: #f472b6;
+  text-shadow: 0 0 20px rgba(244,114,182,0.5);
+  border-color: #f472b6;
+}
+
+.step-feedback.timeout {
+  color: #fb923c;
+  text-shadow: 0 0 20px rgba(251,146,60,0.5);
+  border-color: #fb923c;
+}
+
 @keyframes step-pop {
   0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
   60%  { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }

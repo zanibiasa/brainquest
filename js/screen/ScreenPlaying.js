@@ -105,11 +105,20 @@ const ScreenPlaying = {
     });
   },
 
-  showStepFeedback(steps) {
+  showStepFeedback(steps, correct) {
     const el = document.getElementById('step-feedback');
     const text = document.getElementById('step-text');
     if (!el || !text) return;
-    text.textContent = '⭐ Move ' + steps + ' step' + (steps > 1 ? 's' : '') + '!';
+    el.classList.remove('wrong', 'timeout');
+    if (correct === true) {
+      text.textContent = '⭐ Move ' + steps + ' step' + (steps > 1 ? 's' : '') + '!';
+    } else if (correct === false) {
+      text.textContent = '💔 +' + steps + ' step' + (steps > 1 ? 's' : '');
+      el.classList.add('wrong');
+    } else {
+      text.textContent = '⏰ +' + steps + ' step' + (steps > 1 ? 's' : '');
+      el.classList.add('timeout');
+    }
     el.classList.remove('hidden');
     el.classList.add('show');
   },

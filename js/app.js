@@ -177,7 +177,7 @@ const handlers = {
   },
   answer: (state, change) => {
     SCREENS.playing.showFeedback(change.correct, change.index, state.question);
-    SCREENS.playing.showStepFeedback(change.steps);
+    SCREENS.playing.showStepFeedback(change.steps, change.correct);
     const player = state.players[state.currentPlayerIdx];
     if (player) SCREENS.playing.updateScore(player.score);
   },
