@@ -172,7 +172,7 @@ class GameEngine {
 
     this._recordAnswer(correct, this.state.timeRemaining);
     this._notify({ type: 'answer', correct, index, playerName: player?.name, steps });
-    setTimeout(() => this._afterAnswer(), 1500);
+    setTimeout(() => this._afterAnswer(), 3000);
   }
 
   _startPlaying() {
@@ -208,7 +208,7 @@ class GameEngine {
       const player = this.state.players[this.state.currentPlayerIdx];
       if (player) player.score += 1;
       this._notify({ type: 'timeout', steps: 1 });
-      setTimeout(() => this._afterAnswer(), 1500);
+      setTimeout(() => this._afterAnswer(), 3000);
     }
   }
 
