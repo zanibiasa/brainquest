@@ -23,6 +23,7 @@ class GameEngine {
     this._prevScreen = null;
     this._waitingMode = 'tag';
     this.state.waitingMode = 'tag';
+    this._inputLocked = false;
     this._feedbackDelay = feedbackDelay ?? 3000;
 
     this._timer = timer;
@@ -60,6 +61,7 @@ class GameEngine {
   }
 
   onInput(value) {
+    if (this._inputLocked) return;
     if (this.state.screen === 'playing' && !this.state.answered) {
       const n = parseInt(value);
       if (!isNaN(n) && n >= 0 && n <= 3) {
@@ -102,7 +104,7 @@ class GameEngine {
       } else {
         this._waitingMode = 'category';
         this.state.waitingMode = 'category';
-        this.state.waitingMessage = `${player.name}, scan a category tag`;
+        this.state.waitingMessage = `${player.name}, press a category button`;
         this._notify({ type: 'waiting_category' });
       }
       return;
@@ -111,7 +113,7 @@ class GameEngine {
     if (this.state.screen === 'waiting' && this._waitingMode === 'category') {
       const color = TAG_COLORS[uid];
       if (!color) {
-        this.state.waitingMessage = 'Unknown tag — scan a category tag';
+        this.state.waitingMessage = 'Unknown tag — press a category button';
         this._notify({ type: 'invalid_category' });
         return;
       }
@@ -124,7 +126,13 @@ class GameEngine {
       }
       this.state.currentCategory = catKey;
       this.state.currentCategoryName = this._categoryNames[catKey] || catKey;
-      this._startPlaying();
+      this.state.waitingMessage = `${this.state.players[this.state.currentPlayerIdx].name} gets ${this.state.currentCategoryName}`;
+      this._inputLocked = true;
+      this._notify({ type: 'category_selected' });
+      setTimeout(() => {
+        this._inputLocked = false;
+        this._startPlaying();
+      }, 1000);
       return;
     }
   }

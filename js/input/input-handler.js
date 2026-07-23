@@ -5,7 +5,10 @@ function processEvent(value) {
   if (s === 'register' || (s === 'waiting' && game.state.waitingMode === 'tag')) {
     if (value !== 'TAG1' && value !== 'TAG2' && value !== 'TAG3' && value !== 'TAG4') return;
   } else if (s === 'waiting' && game.state.waitingMode === 'category') {
-    if (value !== 'blue' && value !== 'red' && value !== 'green' && value !== 'yellow') return;
+    const isValidColor = value === 'blue' || value === 'red' || value === 'green' || value === 'yellow';
+    const cn = parseInt(value);
+    const isValidBtn = !isNaN(cn) && cn >= 4 && cn <= 7;
+    if (!isValidColor && !isValidBtn) return;
   } else if (s === 'playing') {
     const n = parseInt(value);
     if (isNaN(n) || n < 0 || n > 3) return;

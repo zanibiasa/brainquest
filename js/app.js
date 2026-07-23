@@ -161,9 +161,16 @@ const handlers = {
   },
   waiting_category: (state) => {
     const s = SCREENS.waiting;
-    s.updatePrompt('Please scan the category tag! 🧭');
+    s.updatePrompt('Press a color button for your category! 🧭');
     s.updatePlayerName(state.players[state.currentPlayerIdx]?.name || '');
     s.updateStatus('');
+    if (state.screenMode === 'touch') s.setTouchGrid('category');
+  },
+  category_selected: (state) => {
+    const s = SCREENS.waiting;
+    s.updatePrompt('Category selected! Get ready...');
+    s.updatePlayerName(state.players[state.currentPlayerIdx]?.name || '');
+    s.updateStatus(state.waitingMessage);
     if (state.screenMode === 'touch') s.setTouchGrid('category');
   },
   first_turn: (state) => {

@@ -33,6 +33,7 @@ const ScreenRegister = {
           <button id="reg-name-save" class="btn-save">Save! 💾</button>
         </div>
         <div id="reg-player-list" class="reg-player-list">${playerChips}</div>
+        <div id="reg-player-count" class="reg-player-count ${hasPlayers ? '' : 'hidden'}">${state.players.length} player${state.players.length !== 1 ? 's' : ''} registered</div>
         <div id="reg-actions" class="reg-actions ${hasPlayers ? '' : 'hidden'}">
           <button id="reg-add-player" class="btn-secondary">➕ Add Player</button>
           <button id="reg-start-game" class="btn-primary">🏁 Start Game!</button>
@@ -92,13 +93,15 @@ const ScreenRegister = {
   },
 
   showActions() {
-    const el = document.getElementById('reg-actions');
-    if (el) el.classList.remove('hidden');
+    const actions = document.getElementById('reg-actions');
+    if (actions) actions.classList.remove('hidden');
+    const count = document.getElementById('reg-player-count');
+    if (count) count.classList.remove('hidden');
   },
 
   hideActions() {
-    const el = document.getElementById('reg-actions');
-    if (el) el.classList.add('hidden');
+    const actions = document.getElementById('reg-actions');
+    if (actions) actions.classList.add('hidden');
   },
 
   clearAndFocusName() {
@@ -115,5 +118,10 @@ const ScreenRegister = {
     el.innerHTML = players.map((p, i) =>
       `<div class="player-chip">👤 #${i + 1} ${p.name}</div>`
     ).join('');
+    const countEl = document.getElementById('reg-player-count');
+    if (countEl) {
+      countEl.textContent = `${players.length} player${players.length !== 1 ? 's' : ''} registered`;
+      countEl.classList.toggle('hidden', players.length === 0);
+    }
   },
 };
