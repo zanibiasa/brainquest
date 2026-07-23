@@ -751,6 +751,16 @@ body::after {
   50%      { box-shadow: 0 0 40px rgba(239,68,68,0.8); }
 }
 
+.timer-landscape {
+  grid-row: 2; grid-column: 2;
+}
+
+.timer-portrait {
+  display: none;
+  align-self: center;
+  margin: 12px 0;
+}
+
 .step-feedback {
   position: fixed;
   top: 50%;
@@ -907,21 +917,25 @@ body::after {
 .answer-tile.a { 
   background: #3b82f6; 
   border: 6px solid #60a5fa; 
+  grid-row: 1; grid-column: 1;
 }
 
 .answer-tile.b { 
   background: #ec4899; 
   border: 6px solid #f472b6; 
+  grid-row: 1; grid-column: 3;
 }
 
 .answer-tile.c { 
   background: #f97316; 
   border: 6px solid #fb923c; 
+  grid-row: 3; grid-column: 1;
 }
 
 .answer-tile.d { 
   background: #22c55e; 
   border: 6px solid #4ade80; 
+  grid-row: 3; grid-column: 3;
 }
 
 /* Bouncy Celebratory Correct Animation */
@@ -1391,10 +1405,22 @@ body::after {
     padding: 16px;
     border-radius: 32px;
   }
+  .timer-portrait {
+    display: flex;
+  }
+  .timer-landscape {
+    display: none;
+  }
    .answers-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 10px;
     padding: 12px;
   }
+  .answer-tile.a { grid-row: 1; grid-column: 1; }
+  .answer-tile.b { grid-row: 1; grid-column: 2; }
+  .answer-tile.c { grid-row: 2; grid-column: 1; }
+  .answer-tile.d { grid-row: 2; grid-column: 2; }
   .answer-tile {
     font-size: 1.2rem;
     border-radius: 20px;

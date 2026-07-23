@@ -11,14 +11,8 @@ const ScreenPlaying = {
 
     this._timerDuration = state.timerDuration;
     const player = state.players[state.currentPlayerIdx];
-    const positions = [
-      { row: 1, col: 1 },
-      { row: 1, col: 3 },
-      { row: 3, col: 1 },
-      { row: 3, col: 3 },
-    ];
     const tiles = this._letters.map((l, i) => `
-      <button class="answer-tile ${l}" id="ans-${l}" style="grid-row: ${positions[i].row}; grid-column: ${positions[i].col};">
+      <button class="answer-tile ${l}" id="ans-${l}">
         <span class="letter">${l.toUpperCase()}</span>
         <span class="answer-value">${q.options[i] || ''}</span>
       </button>`).join('');
@@ -33,9 +27,10 @@ const ScreenPlaying = {
             <img id="question-image" class="question-image ${q.image ? '' : 'hidden'}" src="${q.image || ''}" alt="">
             <div class="question-text" id="question-text">${q.text}</div>
           </div>
+          <div class="timer-display timer-portrait" id="timer-portrait">${state.timerDuration}</div>
           <div class="answers-grid">
             ${tiles}
-            <div class="timer-display" id="timer-display" style="grid-row: 2; grid-column: 2;">${state.timerDuration}</div>
+            <div class="timer-display timer-landscape" id="timer-landscape">${state.timerDuration}</div>
           </div>
         </div>
         <div id="step-feedback" class="step-feedback hidden">
@@ -61,15 +56,16 @@ const ScreenPlaying = {
   destroy() {},
 
   updateTimer(remaining) {
-    const el = document.getElementById('timer-display');
-    if (!el) return;
-    el.textContent = remaining;
-
-    const pct = remaining / this._timerDuration;
-    el.classList.remove('zone-fast', 'zone-mid', 'zone-slow');
-    if (pct > 0.7)       el.classList.add('zone-fast');
-    else if (pct > 0.3)  el.classList.add('zone-mid');
-    else                  el.classList.add('zone-slow');
+    const els = document.querySelectorAll('.timer-display');
+    if (!els.length) return;
+    els.forEach(el => {
+      el.textContent = remaining;
+      const pct = remaining / this._timerDuration;
+      el.classList.remove('zone-fast', 'zone-mid', 'zone-slow');
+      if (pct > 0.7)       el.classList.add('zone-fast');
+      else if (pct > 0.3)  el.classList.add('zone-mid');
+      else                  el.classList.add('zone-slow');
+    });
   },
 
   updateScore(value) {
