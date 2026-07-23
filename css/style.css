@@ -831,7 +831,8 @@ body::after {
 .answers-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr auto 1fr;
   gap: 24px;
   padding: 40px;
 }

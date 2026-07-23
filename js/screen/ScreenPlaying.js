@@ -11,8 +11,14 @@ const ScreenPlaying = {
 
     this._timerDuration = state.timerDuration;
     const player = state.players[state.currentPlayerIdx];
+    const positions = [
+      { row: 1, col: 1 },
+      { row: 1, col: 3 },
+      { row: 3, col: 1 },
+      { row: 3, col: 3 },
+    ];
     const tiles = this._letters.map((l, i) => `
-      <button class="answer-tile ${l}" id="ans-${l}">
+      <button class="answer-tile ${l}" id="ans-${l}" style="grid-row: ${positions[i].row}; grid-column: ${positions[i].col};">
         <span class="letter">${l.toUpperCase()}</span>
         <span class="answer-value">${q.options[i] || ''}</span>
       </button>`).join('');
@@ -21,14 +27,16 @@ const ScreenPlaying = {
       <div id="playing-screen" class="screen">
         <div class="top-bar">
           <div class="score-display">✨ Score: <span id="score-value">${player?.score || 0}</span></div>
-          <div class="timer-display" id="timer-display">${state.timerDuration}</div>
         </div>
         <div class="game-body">
           <div class="question-area">
             <img id="question-image" class="question-image ${q.image ? '' : 'hidden'}" src="${q.image || ''}" alt="">
             <div class="question-text" id="question-text">${q.text}</div>
           </div>
-          <div class="answers-grid">${tiles}</div>
+          <div class="answers-grid">
+            ${tiles}
+            <div class="timer-display" id="timer-display" style="grid-row: 2; grid-column: 2;">${state.timerDuration}</div>
+          </div>
         </div>
         <div id="step-feedback" class="step-feedback hidden">
           <span id="step-text"></span>
