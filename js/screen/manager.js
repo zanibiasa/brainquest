@@ -23,8 +23,5 @@ function showScreen(name, state) {
   const screenEl = appEl.querySelector('.screen');
   if (screenEl) screenEl.classList.add('active');
   screen.events(state);
-  if (state.screenMode === 'touch') {
-    window.screen.orientation.lock('landscape').catch(() => {});
-  }
   return true;
 }

@@ -27,10 +27,6 @@ const ScreenConnect = {
     document.getElementById('btn-keyboard-mode')?.addEventListener('click', async () => {
       poller.stop();
       game.state.screenMode = 'touch';
-      try {
-        await document.documentElement.requestFullscreen();
-        await screen.orientation.lock('landscape').catch(() => {});
-      } catch {}
       const el = document.getElementById('conn-status');
       if (el) el.innerHTML = '<span class="status-dot connected"></span>Touch Mode 🖐️';
       setTimeout(() => game.goToDashboard(), 400);
