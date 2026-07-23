@@ -1,5 +1,5 @@
 class GameEngine {
-  constructor({ timer, scorer, questionSelector, presets, categoryNames, timerDuration }) {
+  constructor({ timer, scorer, questionSelector, presets, categoryNames, timerDuration, feedbackDelay }) {
     this.state = {
       screen: 'connect',
       preset: null,
@@ -23,6 +23,7 @@ class GameEngine {
     this._prevScreen = null;
     this._waitingMode = 'tag';
     this.state.waitingMode = 'tag';
+    this._feedbackDelay = feedbackDelay ?? 3000;
 
     this._timer = timer;
     this._timer.onTick = remaining => this._onTimerTick(remaining);
@@ -172,7 +173,7 @@ class GameEngine {
 
     this._recordAnswer(correct, this.state.timeRemaining);
     this._notify({ type: 'answer', correct, index, playerName: player?.name, steps });
-    setTimeout(() => this._afterAnswer(), 3000);
+    setTimeout(() => this._afterAnswer(), this._feedbackDelay);
   }
 
   _startPlaying() {
@@ -208,7 +209,7 @@ class GameEngine {
       const player = this.state.players[this.state.currentPlayerIdx];
       if (player) player.score += 1;
       this._notify({ type: 'timeout', steps: 1 });
-      setTimeout(() => this._afterAnswer(), 3000);
+      setTimeout(() => this._afterAnswer(), this._feedbackDelay);
     }
   }
 
@@ -251,6 +252,10 @@ class GameEngine {
   setTimerDuration(seconds) {
     this.state.timerDuration = seconds;
     this._notify({ type: 'timer_duration_changed', duration: seconds });
+  }
+
+  setFeedbackDelay(ms) {
+    this._feedbackDelay = ms;
   }
 
   endGame() {

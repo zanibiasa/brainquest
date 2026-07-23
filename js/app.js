@@ -212,8 +212,5 @@ document.addEventListener('click', (e) => {
 $('btn-stats')?.addEventListener('click', () => game.viewStats());
 $('btn-settings')?.addEventListener('click', () => game.goToSettings());
 
-const savedDuration = localStorage.getItem('inova_timer_duration');
-if (savedDuration) game.setTimerDuration(parseInt(savedDuration));
-
 showScreen('connect', game.state);
 precacheImages();

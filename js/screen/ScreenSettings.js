@@ -5,6 +5,7 @@ const ScreenSettings = {
 
   render(state) {
     const savedPoll = parseInt(localStorage.getItem('inova_poll_rate')) || 100;
+    const savedFeedbackDelay = parseInt(localStorage.getItem('inova_feedback_delay')) || 3000;
     return `
       <div id="settings-screen" class="screen">
         <h2>⚙️ Settings ⚙️</h2>
@@ -16,6 +17,15 @@ const ScreenSettings = {
             <span class="settings-slider-label">20s</span>
           </div>
           <div id="settings-timer-value" class="settings-value">${state.timerDuration} seconds</div>
+        </div>
+        <div class="settings-card">
+          <label class="settings-label">🎬 Feedback Duration</label>
+          <div class="settings-slider-row">
+            <span class="settings-slider-label">1s</span>
+            <input type="range" id="settings-feedback-slider" min="1000" max="5000" step="500" value="${savedFeedbackDelay}">
+            <span class="settings-slider-label">5s</span>
+          </div>
+          <div id="settings-feedback-value" class="settings-value">${savedFeedbackDelay / 1000}s</div>
         </div>
         <div class="settings-card">
           <label class="settings-label">⚡ Polling Rate</label>
@@ -37,6 +47,14 @@ const ScreenSettings = {
       localStorage.setItem('inova_timer_duration', val);
       const display = document.getElementById('settings-timer-value');
       if (display) display.textContent = `${val} seconds`;
+    });
+
+    document.getElementById('settings-feedback-slider')?.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value);
+      game.setFeedbackDelay(val);
+      localStorage.setItem('inova_feedback_delay', val);
+      const display = document.getElementById('settings-feedback-value');
+      if (display) display.textContent = `${val / 1000}s`;
     });
 
     document.getElementById('settings-poll-slider')?.addEventListener('input', (e) => {

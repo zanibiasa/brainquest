@@ -6,6 +6,8 @@ const ESP_CANDIDATES = [
   '192.168.137', '10.0.0', '172.16.0',
 ];
 
+const FEEDBACK_DELAY_DEFAULT = 3000;
+
 const TAG_COLORS = {
   'C6104A6': 'blue',
   '3D8E59EE': 'red',
