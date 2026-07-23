@@ -24,7 +24,7 @@ function showScreen(name, state) {
   if (screenEl) screenEl.classList.add('active');
   screen.events(state);
   if (state.screenMode === 'touch') {
-    screen.orientation.lock('landscape').catch(() => {});
+    window.screen.orientation.lock('landscape').catch(() => {});
   }
   return true;
 }
