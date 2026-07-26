@@ -44,6 +44,9 @@ class QuestionSelector {
       case 'division':
         b = this._randInt(2, 12); answer = this._randInt(1, 12); a = b * answer;
         return this._makeNumQ(`${a} ÷ ${b} = ?`, answer);
+      case 'multiplication':
+        a = this._randInt(2, 12); b = this._randInt(2, 12); answer = a * b;
+        return this._makeNumQ(`${a} × ${b} = ?`, answer);
       default:
         a = this._randInt(1, 20); b = this._randInt(1, 20); answer = a + b;
         return this._makeNumQ(`${a} + ${b} = ?`, answer);

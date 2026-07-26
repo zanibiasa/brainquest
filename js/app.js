@@ -104,20 +104,6 @@ const savedIP = localStorage.getItem('inova_esp_ip');
 if (savedIP) {
   ESP_IP = savedIP;
   startPoller();
-} else {
-  discoverESP(ESP_CANDIDATES, '58', (msg) => {
-    const el = $('conn-status');
-    if (el) el.innerHTML = `<span class="status-dot connecting"></span>${msg}`;
-  }).then(found => {
-    if (found) {
-      ESP_IP = found;
-      localStorage.setItem('inova_esp_ip', found);
-      const el = $('conn-status');
-      if (el) el.innerHTML = `<span class="status-dot connected"></span>Found at ${found} ✅`;
-      poller.url = `http://${found}`;
-      startPoller();
-    }
-  });
 }
 
 function updateTouchLabels() {

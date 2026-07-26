@@ -20,7 +20,11 @@ const ScreenDashboard = {
 
     return `
       <div id="dashboard-screen" class="screen">
-        <h1>🧠 Brain Quest! ✨</h1>
+        <div class="brand-logo">
+          <span class="logo-speech">My</span>
+          <span class="logo-brain">Brain</span>
+          <span class="logo-quest">Quest</span>
+        </div>
         <h2 class="dash-subtitle">✨ Select Your Adventure! ✨</h2>
         <div id="preset-scroll" class="preset-scroll">
           <div class="preset-grid" id="preset-grid">${cards}</div>

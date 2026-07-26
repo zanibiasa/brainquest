@@ -1,6 +1,6 @@
 {
-  "name": "Brain Quest",
-  "short_name": "BrainQuest",
+  "name": "My Brain Quest",
+  "short_name": "MyBrainQuest",
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",

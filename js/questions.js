@@ -1,12 +1,12 @@
 const PRESETS = {
-  math: { name: 'Math', icon: '🔢', categories: { red: 'addition', blue: 'fraction', green: 'division', yellow: null } },
+  math: { name: 'Math', icon: '🔢', categories: { red: 'addition', blue: 'fraction', green: 'division', yellow: 'multiplication' } },
   geo:  { name: 'Geography', icon: '🌍', categories: { red: 'flag', blue: 'country', green: 'ocean', yellow: null } },
   sci:  { name: 'Science', icon: '🔬', categories: { red: 'biology', blue: 'physics', green: 'chemistry', yellow: null } },
   nature: { name: 'Nature', icon: '🌿', categories: { red: 'animals', blue: 'plants', green: 'earth', yellow: 'human-body' } },
 };
 
 const CATEGORY_NAMES = {
-  addition: 'Addition', fraction: 'Fraction', division: 'Division',
+  addition: 'Addition', fraction: 'Fraction', division: 'Division', multiplication: 'Multiplication',
   flag: 'Flag', country: 'Country', ocean: 'Ocean',
   biology: 'Biology', physics: 'Physics', chemistry: 'Chemistry',
   animals: 'Animals & Wildlife', plants: 'Plants & Trees',
