@@ -5,6 +5,7 @@ class EventPoller {
     this.onEvent = null;
     this.onStatus = null;
     this._timer = null;
+    this._lastEventId = 0;
   }
 
   start() {
@@ -18,9 +19,12 @@ class EventPoller {
             try {
               const msg = last.data;
               console.log('[EventPoller] raw events count:', events.length, '| last event:', JSON.stringify(last));
-              if (msg.data !== undefined) {
-                console.log('[EventPoller] dispatching onEvent with:', msg.data);
+              if (last.id > this._lastEventId && msg.data !== undefined) {
+                console.log('[EventPoller] dispatching onEvent with:', msg.data, '| id:', last.id);
+                this._lastEventId = last.id;
                 this.onEvent?.(msg.data);
+              } else if (msg.data !== undefined) {
+                console.log('[EventPoller] skipped stale event, id:', last.id, '<= lastEventId:', this._lastEventId);
               }
             } catch {}
           }
@@ -40,5 +44,6 @@ class EventPoller {
 
   stop() {
     clearTimeout(this._timer);
+    this._lastEventId = 0;
   }
 }
