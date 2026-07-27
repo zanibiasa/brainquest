@@ -17,7 +17,11 @@ class EventPoller {
           if (last) {
             try {
               const msg = last.data;
-              if (msg.data !== undefined) this.onEvent?.(msg.data);
+              console.log('[EventPoller] raw events count:', events.length, '| last event:', JSON.stringify(last));
+              if (msg.data !== undefined) {
+                console.log('[EventPoller] dispatching onEvent with:', msg.data);
+                this.onEvent?.(msg.data);
+              }
             } catch {}
           }
           this._timer = setTimeout(poll, this.interval);

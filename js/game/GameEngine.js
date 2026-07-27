@@ -61,22 +61,28 @@ class GameEngine {
   }
 
   onInput(value) {
-    if (this._inputLocked) return;
+    console.log('[GameEngine.onInput] value:', value, '| screen:', this.state.screen, '| inputLocked:', this._inputLocked);
+    if (this._inputLocked) { console.warn('[GameEngine.onInput] BLOCKED: input locked'); return; }
     if (this.state.screen === 'playing' && !this.state.answered) {
       const n = parseInt(value);
       if (!isNaN(n) && n >= 0 && n <= 3) {
+        console.log('[GameEngine.onInput] routing to _handleAnswer:', n);
         this._handleAnswer(n);
         return;
       }
     }
+    console.log('[GameEngine.onInput] routing to _handleTag:', value);
     this._handleTag(value);
   }
 
   _handleTag(uid) {
+    console.log('[GameEngine._handleTag] uid:', uid, '| screen:', this.state.screen);
     if (this.state.screen === 'register') {
-      if (this.state.players.some(p => p.tag === uid)) return;
+      const isDuplicate = this.state.players.some(p => p.tag === uid);
+      if (isDuplicate) { console.warn('[GameEngine._handleTag] duplicate tag, ignoring'); return; }
       this._pendingNameTag = uid;
       this.state.registerTag = uid;
+      console.log('[GameEngine._handleTag] firing tag_scanned_registration for:', uid);
       this._notify({ type: 'tag_scanned_registration', tag: uid });
       return;
     }
