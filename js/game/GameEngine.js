@@ -247,14 +247,16 @@ class GameEngine {
   }
 
   goToSettings() {
+    if (this.state.screen === 'settings') return;
     this._prevScreen = this.state.screen;
     this.state.screen = 'settings';
     this._notify({ type: 'settings' });
   }
 
   backFromSettings() {
-    this.state.screen = this._prevScreen || 'dashboard';
-    this._notify({ type: this.state.screen });
+    const screen = this._prevScreen && this._prevScreen !== 'settings' ? this._prevScreen : 'dashboard';
+    this.state.screen = screen;
+    this._notify({ type: screen });
   }
 
   setTimerDuration(seconds) {

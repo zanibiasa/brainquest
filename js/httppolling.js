@@ -2,7 +2,6 @@ class EventPoller {
   constructor(url, interval = 100) {
     this.url = url;
     this.interval = interval;
-    this.lastId = 0;
     this.onEvent = null;
     this.onStatus = null;
     this._timer = null;
@@ -10,14 +9,14 @@ class EventPoller {
 
   start() {
     const poll = () => {
-      fetch(`${this.url}/events?since=${this.lastId}`)
+      fetch(`${this.url}/events`)
         .then(r => r.json())
         .then(events => {
           this.onStatus?.('connected');
-          for (const e of events) {
-            if (e.id > this.lastId) this.lastId = e.id;
+          const last = events[events.length - 1];
+          if (last) {
             try {
-              const msg = e.data;
+              const msg = last.data;
               if (msg.data !== undefined) this.onEvent?.(msg.data);
             } catch {}
           }

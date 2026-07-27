@@ -1,14 +1,14 @@
 const PRESETS = {
   math: { name: 'Math', icon: '🔢', categories: { red: 'addition', blue: 'fraction', green: 'division', yellow: 'multiplication' } },
-  geo:  { name: 'Geography', icon: '🌍', categories: { red: 'flag', blue: 'country', green: 'ocean', yellow: null } },
-  sci:  { name: 'Science', icon: '🔬', categories: { red: 'biology', blue: 'physics', green: 'chemistry', yellow: null } },
+  geo:  { name: 'Geography', icon: '🌍', categories: { red: 'flag', blue: 'country', green: 'ocean', yellow: 'landmark' } },
+  sci:  { name: 'Science', icon: '🔬', categories: { red: 'biology', blue: 'physics', green: 'chemistry', yellow: 'astronomy' } },
   nature: { name: 'Nature', icon: '🌿', categories: { red: 'animals', blue: 'plants', green: 'earth', yellow: 'human-body' } },
 };
 
 const CATEGORY_NAMES = {
   addition: 'Addition', fraction: 'Fraction', division: 'Division', multiplication: 'Multiplication',
-  flag: 'Flag', country: 'Country', ocean: 'Ocean',
-  biology: 'Biology', physics: 'Physics', chemistry: 'Chemistry',
+  flag: 'Flag', country: 'Country', ocean: 'Ocean', landmark: 'Landmarks',
+  biology: 'Biology', physics: 'Physics', chemistry: 'Chemistry', astronomy: 'Astronomy',
   animals: 'Animals & Wildlife', plants: 'Plants & Trees',
   earth: 'Earth & Space', 'human-body': 'Human Body & Health',
 };
@@ -62,6 +62,18 @@ const QUESTION_BANKS = {
     { text: "Which ocean is on the US west coast?", options: ["Atlantic", "Pacific", "Arctic", "Indian"], answerIndex: 1 },
     { text: "Which ocean is on the US east coast?", options: ["Pacific", "Atlantic", "Indian", "Arctic"], answerIndex: 1 },
   ],
+  landmark: [
+    { text: "Which landmark is in Paris?", options: ["Eiffel Tower", "Big Ben", "Colosseum", "Taj Mahal"], answerIndex: 0 },
+    { text: "The Great Wall is in which country?", options: ["Japan", "China", "India", "Korea"], answerIndex: 1 },
+    { text: "The Statue of Liberty is in which city?", options: ["Washington", "Boston", "New York", "Chicago"], answerIndex: 2 },
+    { text: "The Colosseum is in which country?", options: ["Greece", "Italy", "Spain", "France"], answerIndex: 1 },
+    { text: "The Taj Mahal is in which country?", options: ["Pakistan", "India", "Bangladesh", "Nepal"], answerIndex: 1 },
+    { text: "The Pyramids of Giza are in which country?", options: ["Morocco", "Egypt", "Sudan", "Libya"], answerIndex: 1 },
+    { text: "Machu Picchu is in which country?", options: ["Brazil", "Chile", "Peru", "Bolivia"], answerIndex: 2 },
+    { text: "Big Ben is in which city?", options: ["Paris", "Berlin", "Rome", "London"], answerIndex: 3 },
+    { text: "The Sydney Opera House is in which country?", options: ["New Zealand", "Australia", "Canada", "UK"], answerIndex: 1 },
+    { text: "Mount Everest is the world's tallest...?", options: ["Building", "Mountain", "Tower", "Waterfall"], answerIndex: 1 },
+  ],
   biology: [
     { text: "What is the powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Membrane"], answerIndex: 1 },
     { text: "How many bones in the adult human body?", options: ["186", "196", "206", "216"], answerIndex: 2 },
@@ -97,6 +109,18 @@ const QUESTION_BANKS = {
     { text: "What is the symbol for iron?", options: ["Ir", "In", "Fe", "Io"], answerIndex: 2 },
     { text: "Most abundant gas in Earth's atmosphere?", options: ["Oxygen", "CO2", "Nitrogen", "Argon"], answerIndex: 2 },
     { text: "What type of bond shares electrons?", options: ["Ionic", "Covalent", "Metallic", "Hydrogen"], answerIndex: 1 },
+  ],
+  astronomy: [
+    { text: "Which planet is closest to the Sun?", options: ["Venus", "Earth", "Mercury", "Mars"], answerIndex: 2 },
+    { text: "Which is the largest planet?", options: ["Saturn", "Jupiter", "Neptune", "Earth"], answerIndex: 1 },
+    { text: "What is the name of our galaxy?", options: ["Andromeda", "Orion", "Milky Way", "Alpha Centauri"], answerIndex: 2 },
+    { text: "Which planet has rings?", options: ["Mars", "Venus", "Saturn", "Mercury"], answerIndex: 2 },
+    { text: "What is the closest star to Earth?", options: ["Mars", "The Sun", "Venus", "North Star"], answerIndex: 1 },
+    { text: "Which planet is called the Red Planet?", options: ["Venus", "Jupiter", "Mercury", "Mars"], answerIndex: 3 },
+    { text: "How many planets in our solar system?", options: ["7", "8", "9", "10"], answerIndex: 1 },
+    { text: "What orbits around the Earth?", options: ["The Sun", "Mars", "The Moon", "Venus"], answerIndex: 2 },
+    { text: "Which planet is known as Earth's twin?", options: ["Mars", "Venus", "Mercury", "Jupiter"], answerIndex: 1 },
+    { text: "What is a shooting star really?", options: ["A star", "A meteor", "A planet", "A comet"], answerIndex: 1 },
   ],
   animals: [
     { text: "What is the largest land animal?", options: ["Elephant", "Rhino", "Hippo", "Giraffe"], answerIndex: 0, image: "assets/quiz-images/animals-q1.jpg" },
