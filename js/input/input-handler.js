@@ -2,7 +2,7 @@ const BTN2TAG = ['blue', 'yellow', 'green', 'red'];
 
 function processEvent(value) {
   const s = game.state.screen;
-  if (s === 'register' || (s === 'waiting' && game.state.waitingMode === 'tag')) {
+  if (game.state.screenMode === 'touch' && (s === 'register' || (s === 'waiting' && game.state.waitingMode === 'tag'))) {
     if (value !== 'TAG1' && value !== 'TAG2' && value !== 'TAG3' && value !== 'TAG4') return;
   } else if (s === 'waiting' && game.state.waitingMode === 'category') {
     const isValidColor = value === 'blue' || value === 'red' || value === 'green' || value === 'yellow';
