@@ -14,7 +14,7 @@ function processEvent(value) {
     console.log('[processEvent] in waiting-category block');
     const isValidColor = value === 'blue' || value === 'red' || value === 'green' || value === 'yellow';
     const cn = parseInt(value);
-    const isValidBtn = !isNaN(cn) && cn >= 4 && cn <= 7;
+    const isValidBtn = !isNaN(cn) && cn >= 0 && cn <= 7;
     if (!isValidColor && !isValidBtn) {
       console.warn('[processEvent] BLOCKED by category guard:', value);
       return;
@@ -34,11 +34,17 @@ function processEvent(value) {
   const n = parseInt(value);
   if (!isNaN(n) && n >= 0 && n <= 7) {
     if (n <= 3) {
-      console.log('[processEvent] calling game.onInput with:', value);
-      game.onInput(value);
+      if (s === 'playing') {
+        console.log('[processEvent] calling game.onInput with (answer):', value);
+        game.onInput(value);
+      } else {
+        const tag = BTN2TAG[n];
+        console.log('[processEvent] calling game.onInput with mapped tag (btn 0-3):', tag);
+        game.onInput(tag);
+      }
     } else {
       const tag = BTN2TAG[n - 4];
-      console.log('[processEvent] calling game.onInput with mapped tag:', tag);
+      console.log('[processEvent] calling game.onInput with mapped tag (btn 4-7):', tag);
       game.onInput(tag);
     }
   } else {
